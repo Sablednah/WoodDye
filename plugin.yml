@@ -1,0 +1,19 @@
+name: WoodDye
+version: 1.0.0
+description: No plugin does wood more good!  Stain your wood with dyes - bleach it with bone meal!
+author: SableDnah
+website: http://dev.bukkit.org/server-mods/WoodDye/
+
+main: me.sablednah.wooddye.WoodDye
+softdepend: [ Spout ]
+
+commands:
+    wooddye:
+        description: Root command for all  WoodDye Commands.
+        usage: /<command> [reload]
+
+permissions:
+    WoodDye.*:
+        description: Players with this node have all WoodDye permissions.
+        default: op
+

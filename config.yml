@@ -1,0 +1,5 @@
+# Default WoodDye Config file
+# 
+# debugMode: [true|false] Enable extra debugging messages in server logs.
+
+debugMode: false
