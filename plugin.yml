@@ -13,7 +13,12 @@ commands:
         usage: /<command> [reload]
 
 permissions:
-    WoodDye.*:
+    wooddye.*:
         description: Players with this node have all WoodDye permissions.
         default: op
-
+        children:
+            wooddye.reload: true
+        
+    wooddye.reload:
+        description: Players with this node can use reload command.
+        default: op

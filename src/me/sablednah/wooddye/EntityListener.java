@@ -29,39 +29,54 @@ public class EntityListener implements Listener {
 		}
 		if (item.getType() != Material.INK_SACK) {
 			return; // Not clicked with dye
-		}		
+		}
+		
 		if (WoodDye.debugMode) {
 			System.out.print(target.getType() + ":" + target.getData() + " - " + item.getType() + ":" + item.getData().getData());
 		}
+		boolean hasDyed = false;
+		
 		switch (target.getData()) {
 			case 1:
 				if (item.getData().getData()==15) { // white
 					target.setData((byte) 3);
+					hasDyed = true;
 				}
 				break;
 			case 3:
 				if (item.getData().getData()==0 || item.getData().getData()==3) { // black - brown
 					target.setData((byte) 1);
+					hasDyed = true;
 				}
 				if (item.getData().getData()==15) { // white
 					target.setData((byte) 0);
+					hasDyed = true;
 				}
 				break;
 			case 0:
 				if (item.getData().getData()==0 || item.getData().getData()==3) { // black - brown
 					target.setData((byte) 3);
+					hasDyed = true;
 				}
 				if (item.getData().getData()==15) { // white
 					target.setData((byte) 2);
+					hasDyed = true;
 				}
 				break;
 			case 2:
 				if (item.getData().getData()==0 || item.getData().getData()==3) { // black - brown
 					target.setData((byte) 0);
+					hasDyed = true;
 				}
 				break;
 			default:
 				System.out.print("New wood type? - " + item.getType());
+		}
+		
+		if (WoodDye.useItems && hasDyed) {
+			ItemStack holding = item;
+			holding.setAmount(holding.getAmount() - 1);
+			event.getPlayer().setItemInHand(holding);
 		}
 	}
 }

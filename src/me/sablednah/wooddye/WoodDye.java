@@ -17,14 +17,13 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-
-
 public class WoodDye extends JavaPlugin {
 	public static WoodDye plugin;
 	public final static Logger logger = Logger.getLogger("Minecraft");
 	public final EntityListener EntityListener = new EntityListener(this);
 	
 	public static Boolean debugMode;
+	public static Boolean useItems;
 	public static String wooddyeMessage;
 	
 	private PluginCommandExecutor myExecutor;
@@ -78,6 +77,9 @@ public class WoodDye extends JavaPlugin {
 		if (debugMode) {
 			logger.info("[" + myName + "] DebugMode Enabled.");
 		}
+		if (useItems) {
+			logger.info("[" + myName + "] Consumes Items.");
+		}
 		
 		
 		/**
@@ -112,7 +114,10 @@ public class WoodDye extends JavaPlugin {
 		getConfig().options().copyDefaults(true);
 
 		String headertext;
-		headertext = "Default "+WoodDye.myName+" Config file\r\n\r\n";
+		headertext = "Default "+WoodDye.myName+" Config file\r\n";
+		headertext += "\r\n";
+		headertext += "useItems: [true|false] Consume items when dying.\r\n";
+		headertext += "\r\n";
 		headertext += "debugMode: [true|false] Enable extra debug info in logs.\r\n";
 		headertext += "\r\n";
 
@@ -120,6 +125,7 @@ public class WoodDye extends JavaPlugin {
 		getConfig().options().copyHeader(true);
 
 		debugMode = getConfig().getBoolean("debugMode");
+		useItems = getConfig().getBoolean("useItems");
 
 		saveConfig();
 

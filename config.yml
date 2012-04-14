@@ -1,5 +1,9 @@
 # Default WoodDye Config file
 # 
+# useItems: [true|false] Control if dying wooded consumes the dye.  
+# 
 # debugMode: [true|false] Enable extra debugging messages in server logs.
+
+useItems: false
 
 debugMode: false
