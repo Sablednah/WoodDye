@@ -7,6 +7,13 @@ Simply use bonemeal to lighten wood textures, and brown or black dye to darken t
 Config allows you to choose if using dyes to stain wood consumes them.
 
 
+Also add recipes for wood dyes.
+
+Any Wood + black Dye = Pine wood.
+Any Wood + brown Dye = Apple wood.
+Any Wood + orange Dye = Jungle wood.
+Any Wood + white Dye = Birch wood.
+
 ### Configuration
 
 	useItems: false
@@ -28,7 +35,9 @@ none
 
 ### Changelog
 
-1.0:  First release.
+1.1.0:  Added wood recipes.
+
+1.0.0:  First release.
 
 
 To Do
