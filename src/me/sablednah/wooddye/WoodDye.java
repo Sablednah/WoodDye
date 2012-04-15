@@ -10,8 +10,11 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapelessRecipe;
 
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -21,11 +24,11 @@ public class WoodDye extends JavaPlugin {
 	public static WoodDye plugin;
 	public final static Logger logger = Logger.getLogger("Minecraft");
 	public final EntityListener EntityListener = new EntityListener(this);
-	
+
 	public static Boolean debugMode;
 	public static Boolean useItems;
 	public static String wooddyeMessage;
-	
+
 	private PluginCommandExecutor myExecutor;
 	public static PluginDescriptionFile pdfFile;
 	public static String myName;	
@@ -35,16 +38,16 @@ public class WoodDye extends JavaPlugin {
 	public static FileConfiguration LangConfig = null;
 	public static File LangConfigurationFile = null;
 
-	
-//	public static Map<Player, Boolean> pluginEnabled = null;
+
+	//	public static Map<Player, Boolean> pluginEnabled = null;
 
 	public static String[] animalList = { "Pig", "Sheep", "Cow", "Chicken",
-			"MushroomCow", "Golem", "IronGolem", "Snowman", "Squid",
-			"Villager", "Wolf", "Ocelot" };
+		"MushroomCow", "Golem", "IronGolem", "Snowman", "Squid",
+		"Villager", "Wolf", "Ocelot" };
 	public static String[] monsterList = { "Blaze", "Zombie", "Creeper",
-			"Skeleton", "Spider", "Ghast", "MagmaCube", "Slime", "CaveSpider",
-			"EnderDragon", "EnderMan", "Giant", "PigZombie", "SilverFish",
-			"Spider" };
+		"Skeleton", "Spider", "Ghast", "MagmaCube", "Slime", "CaveSpider",
+		"EnderDragon", "EnderMan", "Giant", "PigZombie", "SilverFish",
+	"Spider" };
 
 	public String[] entityList = concat(animalList, monsterList);
 
@@ -68,7 +71,7 @@ public class WoodDye extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 
 		pm.registerEvents(this.EntityListener, this);
-		
+
 		myExecutor = new PluginCommandExecutor(plugin);
 		getCommand("wooddye").setExecutor(myExecutor);
 
@@ -80,32 +83,65 @@ public class WoodDye extends JavaPlugin {
 		if (useItems) {
 			logger.info("[" + myName + "] Consumes Items.");
 		}
-		
-		
+
+		this.addRecipies();
+
 		/**
 		 * Schedule a version check every 6 hours for update notification .
 		 */
 		this.getServer().getScheduler()
-				.scheduleAsyncRepeatingTask(this, new Runnable() {
-					@Override
-					public void run() {
-						try {
-							VersionNew = getNewVersion(VersionCurrent);
-							String VersionOld = getDescription().getVersion();
-							if (!VersionNew.contains(VersionOld)) {
-								logger.warning("["+WoodDye.myName+"] " + VersionNew + " is available. You're using " + VersionOld);
-								logger.warning("["+WoodDye.myName+"] http://dev.bukkit.org/server-mods/"+WoodDye.myName+"/");
-							}
-
-						} catch (Exception e) {
-							// ignore exceptions
-						}
+		.scheduleAsyncRepeatingTask(this, new Runnable() {
+			@Override
+			public void run() {
+				try {
+					VersionNew = getNewVersion(VersionCurrent);
+					String VersionOld = getDescription().getVersion();
+					if (!VersionNew.contains(VersionOld)) {
+						logger.warning("["+WoodDye.myName+"] " + VersionNew + " is available. You're using " + VersionOld);
+						logger.warning("["+WoodDye.myName+"] http://dev.bukkit.org/server-mods/"+WoodDye.myName+"/");
 					}
-				}, 0, 432000);
+
+				} catch (Exception e) {
+					// ignore exceptions
+				}
+			}
+		}, 0, 432000);
 
 		logger.info("[" + myName + "] Online.");
 	}
 
+
+	private void addRecipies() {
+		ShapelessRecipe woodRecipe = null;
+
+		for(int i=0; i<4; i++) { // Dark Wood = any wood + black ink
+			woodRecipe = new ShapelessRecipe(new ItemStack(Material.WOOD,1,(short) 0,(byte) 1));
+			woodRecipe.addIngredient(Material.WOOD, i);
+			woodRecipe.addIngredient(Material.INK_SACK, (byte) 0);
+			this.getServer().addRecipe(woodRecipe);
+		}
+
+		for(int i=0; i<4; i++) { // Jungle Wood = any wood + orange dye
+			woodRecipe = new ShapelessRecipe(new ItemStack(Material.WOOD,1,(short) 0,(byte) 3));
+			woodRecipe.addIngredient(Material.WOOD, i);
+			woodRecipe.addIngredient(Material.INK_SACK, (byte) 14);
+			this.getServer().addRecipe(woodRecipe);
+		}
+
+		for(int i=0; i<4; i++) { // Light Wood = any wood + white dye
+			woodRecipe = new ShapelessRecipe(new ItemStack(Material.WOOD,1,(short) 0,(byte) 2));
+			woodRecipe.addIngredient(Material.WOOD, i);
+			woodRecipe.addIngredient(Material.INK_SACK, (byte) 15);
+			this.getServer().addRecipe(woodRecipe);
+		}
+
+		for(int i=0; i<4; i++) { // 'regular' Wood = any wood + brown dye
+			woodRecipe = new ShapelessRecipe(new ItemStack(Material.WOOD,1,(short) 0,(byte) 1));
+			woodRecipe.addIngredient(Material.WOOD, i);
+			woodRecipe.addIngredient(Material.INK_SACK, (byte) 3);
+			this.getServer().addRecipe(woodRecipe);
+		}
+	}
 
 	/**
 	 * Initialise config file
