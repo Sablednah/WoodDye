@@ -6,4 +6,6 @@
 
 useItems: false
 
+fireProof: true
+
 debugMode: false

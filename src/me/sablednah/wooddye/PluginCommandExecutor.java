@@ -34,6 +34,7 @@ public class PluginCommandExecutor implements CommandExecutor {
 					plugin.reloadConfig();
 					WoodDye.debugMode = plugin.getConfig().getBoolean("debugMode");
 					WoodDye.useItems = plugin.getConfig().getBoolean("useItems");
+					WoodDye.fireProof = plugin.getConfig().getBoolean("fireProof");
 				
 					plugin.reloadLangConfig();
 					
